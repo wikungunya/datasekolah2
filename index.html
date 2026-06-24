@@ -1,0 +1,263 @@
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biodata Siswa Sekolah Dasar</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .header-float {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    table {
+      border-collapse: collapse;
+      border: 1px solid #d1d5db;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 12px;
+      white-space: nowrap;
+      /* Garis Horizontal dan Vertikal */
+  border: 1px solid #d1d5db;
+    }
+    
+    td {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    td:hover {
+      overflow: visible;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    
+    .pagination-btn {
+      transition: all 0.2s;
+    }
+    
+    .pagination-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    
+    .tab-button {
+      transition: all 0.3s;
+      color: #6b7280;
+      background-color: transparent;
+    }
+    
+    .tab-button:hover:not(.active) {
+      background-color: #f3f4f6;
+    }
+    
+    .tab-button.active {
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .table-row {
+      transition: background-color 0.2s;
+    }
+    
+    .table-row:hover {
+      background-color: #b3b3ff;
+    }
+    
+    .dark-mode .table-row:hover {
+      background-color: #1e3a8a;
+    }
+
+
+/* Gaya default untuk mode gelap di kontainer utama */
+.dark-mode-active {
+    background-color: #222187 !important;
+}
+
+.dark-mode-active .bg-white {
+    background-color: #374151 !important; /* Gunakan warna gelap, bukan pink jika ingin terlihat profesional */
+    color: #f3f4f6 !important;
+}
+
+/* Pastikan teks di dalam tabel tetap terang saat mode gelap aktif */
+.dark-mode-active td, 
+.dark-mode-active th {
+    color: #e5e7eb !important;
+    border-color: #4b5563 !important;
+}
+
+/* Paksa semua elemen warna teks (Tailwind classes) agar seragam */
+.dark-mode-active h1, 
+.dark-mode-active h3, 
+.dark-mode-active p, 
+.dark-mode-active span, 
+.dark-mode-active label {
+color: #f3f4f6 !important; /* Warna putih keabu-abuan yang lembut */ 
+}
+.dark-mode-active td, 
+.dark-mode-active th,
+.dark-mode-active div {
+    color: #f3f4f6 !important;
+}
+
+/* Perbaiki border agar tidak terlalu kontras di mode gelap */
+.dark-mode-active border, 
+.dark-mode-active .border-gray-200, 
+.dark-mode-active .border-gray-300 {
+    border-color: #4b5563 !important;
+}
+/* Jika Anda ingin dropdown dan input-nya juga berubah agar tidak terlalu silau */
+.dark-mode-active select, 
+.dark-mode-active input {
+    background-color: #374151 !important; /* Latar belakang input jadi gelap */
+    color: #f3f4f6 !important;           /* Teks di dalam input jadi terang */
+    border-color: #4b5563 !important;    /* Warna garis pinggir input */
+}
+
+/* Baris tabel saat dihover di mode gelap */
+.dark-mode-active .table-row:hover {
+    background-color: #4b5563 !important;
+}
+
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-container" class="min-h-full flex flex-col w-full"><!-- Header -->
+   <header id="header" class="header-float rounded-b-3xl px-6 py-6 mb-8 relative">
+    <h1 id="header-title" class="text-3xl font-bold text-center text-white">Data Siswa SD Negeri 2 Pandansari</h1><button id="theme-toggle" class="absolute top-6 right-6 p-3 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all">
+     <svg id="icon-sun" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+     </svg>
+     <svg id="icon-moon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+     </svg></button>
+   </header><!-- Tabs -->
+   <div class="px-6 mb-6">
+    <div class="flex gap-3 bg-white rounded-xl p-2 shadow-md"><button id="tab-biodata" class="tab-button active flex-1 px-6 py-4 font-semibold text-lg rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg><span>Biodata</span> </button> <button id="tab-infografis" class="tab-button flex-1 px-6 py-4 font-semibold text-lg rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+      </svg><span>Infografis</span> </button>
+    </div>
+   </div><!-- Tab Content Container -->
+   <main class="flex-1 px-6 pb-6"><!-- Biodata Tab -->
+    <div id="content-biodata" class="tab-content"><!-- Search and Filters -->
+     <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Filter Kelas</label> <select id="filter-kelas" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="">Semua Kelas</option> </select>
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Filter Nama</label> <select id="filter-nama" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="">Semua Nama</option> </select>
+       </div>
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Pencarian Cepat</label> <input type="text" id="search-input" placeholder="Golet apa..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+       </div>
+
+        <div class="flex items-end gap-2">
+        <button id="reset-btn" class="flex-1 px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"> Reset Data </button>
+        
+        <a href="https://docs.google.com/spreadsheets/d/1Cnr_Qfyymv-hIFUfZj7jLJ0jGrQkVTwQuNw3wt9ZiQI/edit?usp=sharing" target="_blank" 
+        class="flex-1 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-center">
+        Admin
+        </a>
+       </div>
+
+      </div>
+      <div class="flex justify-between items-center">
+       <div><label class="text-sm font-medium text-gray-700 mr-2">Tampilkan:</label> <select id="rows-per-page" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="10">10</option> <option value="20">20</option> <option value="50">50</option> <option value="100">100</option> <option value="all">Semua</option> </select> <span class="text-sm text-gray-600 ml-2">baris per halaman</span>
+       </div>
+       <div id="total-data" class="text-sm font-medium text-gray-700">
+        Total: 0 siswa
+       </div>
+      </div>
+     </div><!-- Table -->
+     <div class="bg-white rounded-lg shadow overflow-hidden">
+      <div class="table-container">
+       <table class="w-full">
+        <thead id="table-header" class="bg-gray-400 text-white">
+         <tr>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('No')">No</th>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Nama')">Nama</th>
+		  <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('NIK')">NIK</th>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Tempat Lahir')">Tempat Lahir</th>
+          <th rowspan="2" class="text-center">Tanggal Lahir</th>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Kelas')">Kelas</th>
+          <th rowspan="2" class="text-center">NISN</th>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('NIS')">NIS</th>
+          <th rowspan="2" class="text-center">Alamat</th>
+          <th colspan="2" class="text-center">Orang Tua</th>
+          <th rowspan="2" class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Jenis Kelamin')">JK</th>
+        </tr>
+        <tr>
+          <th class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Nama Ayah')">Nama Ayah</th>
+          <th class="text-center cursor-pointer hover:bg-black/10" onclick="sortTable('Nama Ibu')">Nama Ibu</th>
+        </tr>
+         </tr>
+        </thead>
+        <tbody id="table-body">
+         <tr>
+          <td colspan="10" class="text-center py-8 text-gray-500">Memuat data...</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Pagination -->
+     <div id="pagination" class="flex justify-center items-center gap-2 mt-6"><!-- Pagination buttons will be inserted here -->
+     </div>
+    </div><!-- Infografis Tab -->
+    <div id="content-infografis" class="tab-content hidden">
+     <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+       <div><label class="block text-sm font-medium text-gray-700 mb-2">Filter Kelas</label> <select id="filter-kelas-chart" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option value="">Semua Kelas</option> </select>
+       </div>
+       <div class="flex items-end"><button id="reset-chart-btn" class="w-full px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"> Reset Filter </button>
+       </div>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><!-- Chart Kelas -->
+      <div class="bg-white rounded-lg shadow p-6">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">Jumlah Siswa per Kelas</h3>
+       <canvas id="chart-kelas"></canvas>
+      </div><!-- Chart Jenis Kelamin -->
+      <div class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+       <h3 class="text-xl font-bold text-gray-800 mb-4 w=full">Jumlah Siswa per Jenis Kelamin</h3>
+       <div style="position: relative; height:300px; width:300px;">
+       <canvas id="chart-gender" width="200" height="200"></canvas>
+      </div>
+      </div>
+    <!-- Total Siswa -->
+      <div class="bg-white rounded-lg shadow p-6 lg:col-span-2">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">Total Keseluruhan</h3>
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div id="total-chart" class="text-center">
+         <p class="text-5xl font-bold text-blue-600">0</p>
+         <p class="text-gray-600 mt-2">Total Siswa</p>
+        </div>
+        <div id="total-laki" class="text-center">
+         <p class="text-5xl font-bold text-blue-500">0</p>
+         <p class="text-gray-600 mt-2">Laki-laki</p>
+        </div>
+        <div id="total-perempuan" class="text-center">
+         <p class="text-5xl font-bold text-pink-500">0</p>
+         <p class="text-gray-600 mt-2">Perempuan</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Footer -->
+   <footer id="footer" class="mt-8 py-6 text-center text-gray-600 border-t border-gray-200">
+    <p id="footer-text">© 2025 Sekolah Dasar Negeri 2 Pandansari.</p>
+   </footer>
+  </div>
+ </body>
+</html>
