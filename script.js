@@ -3,6 +3,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+
 	function getChartTextColor() {
     return isDarkMode ? '#f3f4f6' : '#374151'; // Putih abu-abu jika dark, abu-abu gelap jika light
 }
