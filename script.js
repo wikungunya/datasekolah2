@@ -1,5 +1,9 @@
 <script>
-  function getChartTextColor() {
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	function getChartTextColor() {
     return isDarkMode ? '#f3f4f6' : '#374151'; // Putih abu-abu jika dark, abu-abu gelap jika light
 }
 
